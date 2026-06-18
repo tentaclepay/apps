@@ -39,14 +39,14 @@ export const x402FacilitatorClient = () =>
       })
     );
 
-    clientRegistry.set(
-      "sui:devnet",
-      new SuiGrpcClient({
-        network: "devnet",
-        baseUrl:
-          c.env.SUI_DEVNET_GRPC_URL ?? "https://fullnode.devnet.sui.io:443",
-      })
-    );
+    // clientRegistry.set(
+    //   "sui:devnet",
+    //   new SuiGrpcClient({
+    //     network: "devnet",
+    //     baseUrl:
+    //       c.env.SUI_DEVNET_GRPC_URL ?? "https://fullnode.devnet.sui.io:443",
+    //   })
+    // );
 
     registerSuiExactScheme(facilitator, signer, clientRegistry);
 
