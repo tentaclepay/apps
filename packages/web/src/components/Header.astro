@@ -5,9 +5,9 @@ import { Github } from "simple-icons-astro";
 import { LINKS } from "@/consts";
 
 const nav = [
+  { label: "Wallet", href: "#wallet" },
   { label: "Payments", href: "#payments" },
   { label: "Cross-Chain", href: "#cross-chain" },
-  { label: "Wallet", href: "#wallet" },
 ] as const;
 ---
 
@@ -18,7 +18,7 @@ const nav = [
   <div class="container mx-auto flex h-16 items-center justify-between px-6">
     <!-- Wordmark -->
     <a
-      href="#hero"
+      href="#"
       class="flex shrink-0 items-center gap-3 transition-transform duration-150 ease-out active:scale-[0.98]"
     >
       <img src="/logo.svg" alt="" width="256" height="256" class="h-9 w-9" />
@@ -113,8 +113,7 @@ const nav = [
       >
         Docs
       </span>
-      <span aria-hidden="true" class="font-mono text-4xl text-primary">↗</span
-      >
+      <span aria-hidden="true" class="font-mono text-4xl text-primary">↗</span>
     </a>
   </nav>
 

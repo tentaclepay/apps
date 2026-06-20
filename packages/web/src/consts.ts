@@ -24,5 +24,8 @@ export const LINKS = {
   github: "https://github.com/tentaclepay",
   x: "https://x.com/tentaclepay",
   docs: "https://docs.tentaclepay.com",
-  x402Quickstart: "https://docs.tentaclepay.com/x402/quickstart",
+  agentQuickstart: "https://docs.tentaclepay.com/x402/quickstart-for-agents",
+  sellerQuickstart: "https://docs.tentaclepay.com/x402/quickstart-for-sellers",
+  crossChain: "https://docs.tentaclepay.com/cross-chain/overview",
+  walletSetup: "https://docs.tentaclepay.com/wallet/get-started",
 } as const;

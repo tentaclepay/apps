@@ -1,3 +1,7 @@
+---
+import { LINKS } from "@/consts";
+---
+
 <section
   id="cross-chain"
   aria-labelledby="cross-chain-heading"
@@ -37,7 +41,11 @@
           data-split
           class="font-heading text-[clamp(3.75rem,8.5vw,7.5rem)] uppercase leading-[0.85] tracking-wide"
         >
-          Across the <span class="text-primary">sea</span>
+          <span
+            class="text-transparent [-webkit-text-stroke:2px_var(--foreground)]"
+            >Across
+          </span>
+          the <span class="text-primary">sea</span>
         </h2>
       </div>
 
@@ -54,17 +62,26 @@
           <span class="font-medium text-primary">everywhere</span>.
         </p>
 
+        <span
+          class="inline-flex w-fit select-none items-center gap-2 font-mono text-xs font-medium uppercase tracking-widest text-primary"
+        >
+          Live on Testnet
+        </span>
+
         <p class="max-w-md text-base leading-relaxed text-foreground/70">
           Your agent keeps a single Sui wallet. Pay for services wherever they
           live. Spend the coins you already hold.
         </p>
 
-        <span
-          class="inline-flex h-10 w-fit select-none items-center gap-2 border border-primary px-5 font-mono text-xs font-medium uppercase tracking-widest text-primary"
+        <a
+          href={LINKS.crossChain}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex h-10 w-fit items-center gap-2 border border-foreground/20 px-5 font-mono text-xs font-medium uppercase tracking-widest text-foreground/60 transition-colors hover:border-foreground/40 hover:text-foreground"
         >
-          <span class="size-1 bg-primary"></span>
-          Coming soon
-        </span>
+          Read the docs
+          <span aria-hidden="true">↗</span>
+        </a>
       </div>
     </div>
   </div>

@@ -1,12 +1,5 @@
 ---
-import { Copy, CopyCheck } from "@lucide/astro";
-
 import { LINKS } from "@/consts";
-
-const tabs = [
-  { id: "x402", label: "x402", status: "Live" },
-  { id: "mpp", label: "MPP", status: "Soon" },
-] as const;
 
 const services = [
   {
@@ -14,7 +7,6 @@ const services = [
     detail: "Web search built for agents",
     price: "$0.01",
     unit: "/ search",
-    protocol: "x402",
     offset: "",
     fade: false,
   },
@@ -23,7 +15,6 @@ const services = [
     detail: "Decentralized blob storage",
     price: "$0.005",
     unit: "/ upload",
-    protocol: "x402",
     offset: "md:ml-24",
     fade: false,
   },
@@ -32,7 +23,6 @@ const services = [
     detail: "Live order-book market data",
     price: "$0.002",
     unit: "/ query",
-    protocol: "mpp",
     offset: "md:ml-10",
     fade: false,
   },
@@ -41,16 +31,10 @@ const services = [
     detail: "People & company enrichment",
     price: "$0.25",
     unit: "/ lookup",
-    protocol: "x402",
     offset: "md:ml-16",
     fade: true,
   },
 ] as const;
-
-const protocolBadge: Record<(typeof services)[number]["protocol"], string> = {
-  x402: "border-emerald-400/40 text-emerald-400",
-  mpp: "border-sky-400/40 text-sky-400",
-};
 ---
 
 <section
@@ -92,87 +76,51 @@ const protocolBadge: Record<(typeof services)[number]["protocol"], string> = {
           data-split
           class="font-heading text-[clamp(3.75rem,8.5vw,7.5rem)] uppercase leading-[0.85] tracking-wide"
         >
-          The <span class="text-primary">payment</span> rails
+          agentic <span class="text-primary">payment</span>
         </h2>
       </div>
 
       <div data-reveal-group class="flex flex-col gap-6">
         <p class="max-w-md text-sm text-foreground/60">
-          Pick the rail your agents need — both settle natively on Sui.
+          The payment rail your agents need — settling natively on Sui.
         </p>
 
-        <!-- Tabs -->
-        <div
-          role="tablist"
-          aria-label="Payment rails"
-          class="flex w-fit divide-x divide-border border border-border bg-background/80"
-        >
-          {
-            tabs.map(({ id, label, status }) => (
-              <button
-                type="button"
-                role="tab"
-                id={`tab-${id}`}
-                aria-controls={`panel-${id}`}
-                aria-selected={id === "x402"}
-                class="group inline-flex h-11 items-center gap-2.5 px-5 font-mono text-sm font-medium uppercase tracking-wider text-muted-foreground transition-colors duration-150 ease-out hover:text-foreground aria-selected:bg-primary aria-selected:text-primary-foreground"
-              >
-                {label}
-                <span class="inline-flex items-center gap-1.5 border border-border px-1.5 py-0.5 text-[10px] uppercase tracking-widest group-aria-selected:border-primary-foreground/40">
-                  {id === "x402" && (
-                    <span class="size-1 bg-primary group-aria-selected:bg-primary-foreground" />
-                  )}
-                  {status}
-                </span>
-              </button>
-            ))
-          }
-        </div>
+        <!-- x402 content -->
+        <div class="flex flex-col gap-5">
+          <p class="max-w-md text-base leading-relaxed text-foreground/70">
+            <span class="font-medium text-foreground">x402</span> — The HTTP-native
+            rail. The agent pays, the request clears — no sign-up, no checkout, no
+            human in the loop. Stablecoins move
+            <span class="font-medium text-primary">gasless</span> on Sui, and our
+            facilitator sponsors gas for every other Sui coin. Spend as little as
+            <span class="font-bold">$0.00001</span> per call — your agents pay for
+            exactly what they use, nothing more.
+          </p>
 
-        <!-- Panels: stacked in one grid cell so the taller one reserves height -->
-        <div class="grid">
-          <!-- Panel: x402 -->
-          <div
-            role="tabpanel"
-            id="panel-x402"
-            aria-labelledby="tab-x402"
-            class="col-start-1 row-start-1 flex flex-col gap-5 data-[inactive]:pointer-events-none data-[inactive]:invisible data-[inactive]:opacity-0"
-          >
-            <p class="max-w-md text-base leading-relaxed text-foreground/70">
-              <span class="font-medium text-foreground">x402</span> — The HTTP-native
-              rail. The agent pays, the request clears — no checkout, no human in
-              the loop. Stablecoins move
-              <span class="font-medium text-primary">gasless</span> on Sui, and our
-              facilitator sponsors gas for every other Sui coin.
-            </p>
+          <p class="text-muted-foreground">Integrate in a few lines of code</p>
 
-            <div
-              class="flex h-11 w-fit max-w-full items-center gap-3 border border-border bg-card/60 px-4 font-mono text-sm"
-            >
-              <span class="select-none text-primary">$</span>
-              <code class="truncate text-foreground">
-                npm i @tentaclepay/sui-x402
-              </code>
-              <button
-                type="button"
-                data-copy="npm i @tentaclepay/sui-x402"
-                aria-label="Copy install command"
-                class="group ml-1 text-muted-foreground transition-colors hover:text-foreground active:scale-[0.97]"
-              >
-                <Copy class="size-3.5 group-data-[copied]:hidden" />
-                <CopyCheck
-                  class="hidden size-3.5 text-primary group-data-[copied]:block"
-                />
-              </button>
-            </div>
-
+          <div class="flex flex-col gap-3">
             <a
-              href={LINKS.x402Quickstart}
+              href={LINKS.agentQuickstart}
               target="_blank"
               rel="noopener noreferrer"
               class="group inline-flex w-fit items-center gap-2 font-mono text-sm font-medium uppercase tracking-wider text-primary transition-colors duration-150 ease-out hover:text-accent"
             >
-              Read the quickstart
+              For agents
+              <span
+                aria-hidden="true"
+                class="transition-transform duration-150 ease-out group-hover:translate-x-0.5"
+              >
+                →
+              </span>
+            </a>
+            <a
+              href={LINKS.sellerQuickstart}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group inline-flex w-fit items-center gap-2 font-mono text-sm font-medium uppercase tracking-wider text-foreground/70 transition-colors duration-150 ease-out hover:text-foreground/80"
+            >
+              For sellers
               <span
                 aria-hidden="true"
                 class="transition-transform duration-150 ease-out group-hover:translate-x-0.5"
@@ -181,29 +129,6 @@ const protocolBadge: Record<(typeof services)[number]["protocol"], string> = {
               </span>
             </a>
           </div>
-
-          <!-- Panel: MPP -->
-          <div
-            role="tabpanel"
-            id="panel-mpp"
-            aria-labelledby="tab-mpp"
-            class="col-start-1 row-start-1 flex flex-col gap-5 data-[inactive]:pointer-events-none data-[inactive]:invisible data-[inactive]:opacity-0"
-            data-inactive
-          >
-            <p class="max-w-md text-base leading-relaxed text-foreground/70">
-              <span class="font-medium text-foreground">
-                Machine Payment Protocol
-              </span>
-              — an open protocol for machine-to-machine payments, arriving natively
-              on Sui.
-            </p>
-            <span
-              class="inline-flex h-10 w-fit select-none items-center gap-2 border border-primary px-5 font-mono text-xs font-medium uppercase tracking-widest text-primary"
-            >
-              <span class="size-1 bg-primary"></span>
-              Coming soon
-            </span>
-          </div>
         </div>
       </div>
     </div>
@@ -211,101 +136,35 @@ const protocolBadge: Record<(typeof services)[number]["protocol"], string> = {
     <!-- Right: example services agents pay for, floating over the tentacles -->
     <div data-reveal-group class="flex flex-col gap-4">
       {
-        services.map(
-          ({ name, detail, price, unit, protocol, offset, fade }) => (
-            <article
-              aria-hidden={fade ? "true" : undefined}
-              class:list={[
-                "max-w-sm border border-border bg-card/80 p-5 backdrop-blur-sm",
-                offset,
-                fade &&
-                  "pointer-events-none select-none mask-[linear-gradient(black,transparent_90%)]",
-              ]}
-            >
-              <div class="flex items-start justify-between gap-4">
-                <div class="flex flex-col gap-1">
-                  <h3 class="text-sm font-medium text-foreground">{name}</h3>
-                  <p class="text-sm text-foreground/60">{detail}</p>
-                </div>
-                <span
-                  class:list={[
-                    "inline-flex shrink-0 items-center gap-1.5 border px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-widest",
-                    protocolBadge[protocol],
-                  ]}
-                >
-                  <span class="size-1 bg-current" />
-                  {protocol}
-                </span>
+        services.map(({ name, detail, price, unit, offset, fade }) => (
+          <article
+            aria-hidden={fade ? "true" : undefined}
+            class:list={[
+              "max-w-sm border border-border bg-card/80 p-5 backdrop-blur-sm",
+              offset,
+              fade &&
+                "pointer-events-none select-none mask-[linear-gradient(black,transparent_90%)]",
+            ]}
+          >
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex flex-col gap-1">
+                <h3 class="text-sm font-medium text-foreground">{name}</h3>
+                <p class="text-sm text-foreground/60">{detail}</p>
               </div>
-              <div class="mt-4 flex items-baseline gap-1.5 border-t border-border pt-3 font-mono">
-                <span class="text-lg text-foreground">{price}</span>
-                <span class="text-xs uppercase tracking-wider text-muted-foreground">
-                  {unit}
-                </span>
-              </div>
-            </article>
-          ),
-        )
+              <span class="inline-flex shrink-0 items-center gap-1.5 border border-emerald-400/40 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-widest text-emerald-400">
+                <span class="size-1 bg-current" />
+                live
+              </span>
+            </div>
+            <div class="mt-4 flex items-baseline gap-1.5 border-t border-border pt-3 font-mono">
+              <span class="text-lg text-foreground">{price}</span>
+              <span class="text-xs uppercase tracking-wider text-muted-foreground">
+                {unit}
+              </span>
+            </div>
+          </article>
+        ))
       }
     </div>
   </div>
 </section>
-
-<script>
-  import { gsap } from "gsap";
-
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const tabs = document.querySelectorAll<HTMLButtonElement>(
-    '#payments [role="tab"]',
-  );
-  const panels = document.querySelectorAll<HTMLElement>(
-    '#payments [role="tabpanel"]',
-  );
-
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      if (tab.getAttribute("aria-selected") === "true") return;
-      tabs.forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
-      panels.forEach((panel) => {
-        const active = panel.id === tab.getAttribute("aria-controls");
-        panel.toggleAttribute("data-inactive", !active);
-        if (active && !reduced.matches) {
-          gsap.fromTo(
-            panel,
-            { y: 14, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.45,
-              ease: "power3.out",
-              clearProps: "transform,opacity",
-            },
-          );
-        }
-      });
-    });
-  });
-
-  document
-    .querySelectorAll<HTMLButtonElement>("#payments [data-copy]")
-    .forEach((button) => {
-      const defaultLabel = button.getAttribute("aria-label") ?? "Copy";
-      let resetTimer: ReturnType<typeof setTimeout> | undefined;
-      button.addEventListener("click", async () => {
-        const text = button.dataset.copy;
-        if (!text) return;
-        try {
-          await navigator.clipboard.writeText(text);
-          button.setAttribute("data-copied", "");
-          button.setAttribute("aria-label", "Copied");
-          clearTimeout(resetTimer);
-          resetTimer = setTimeout(() => {
-            button.removeAttribute("data-copied");
-            button.setAttribute("aria-label", defaultLabel);
-          }, 1000);
-        } catch {
-          /* clipboard unavailable — no-op */
-        }
-      });
-    });
-</script>

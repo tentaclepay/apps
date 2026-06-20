@@ -105,56 +105,6 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
         onComplete: () => split.revert(),
       });
     }
-
-    /* Hero load timeline — the one orchestrated moment on the page. */
-    const hero = document.querySelector<HTMLElement>("[data-hero]");
-    if (!hero) return;
-
-    const title = hero.querySelector<HTMLElement>("[data-hero-title]");
-    const items = hero.querySelectorAll<HTMLElement>("[data-hero-item]");
-    const art = document.querySelector<HTMLElement>("[data-hero-img]");
-    const tl = gsap.timeline();
-
-    if (art) {
-      tl.fromTo(
-        art,
-        { opacity: 0 },
-        { opacity: 1, duration: 1.6, ease: "power2.inOut" },
-        0
-      );
-    }
-
-    if (title) {
-      const split = SplitText.create(title, { type: "lines", mask: "lines" });
-      gsap.set(split.lines, { yPercent: 110 });
-      gsap.set(hero, { opacity: 1 });
-      tl.to(
-        split.lines,
-        {
-          yPercent: 0,
-          duration: 1.1,
-          ease: "power4.out",
-          stagger: 0.12,
-          onComplete: () => split.revert(),
-        },
-        0.15
-      );
-    } else {
-      gsap.set(hero, { opacity: 1 });
-    }
-
-    tl.fromTo(
-      items,
-      { y: 24, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.9,
-        stagger: 0.1,
-        clearProps: "transform",
-      },
-      0.7
-    );
   });
 });
 

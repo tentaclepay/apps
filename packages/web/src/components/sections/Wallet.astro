@@ -174,14 +174,17 @@ const runs = [
           data-reveal
           class="font-mono text-xs font-medium uppercase tracking-widest text-muted-foreground"
         >
-          // Wallet
+          // Payment infrastructure for AI agents
         </p>
         <h2
           id="wallet-heading"
           data-split
-          class="font-heading text-[clamp(3.75rem,8.5vw,7.5rem)] uppercase leading-[0.85] tracking-wide"
+          class="font-heading text-[clamp(2.75rem,7.5vw,6.5rem)] uppercase leading-[0.85] tracking-wide"
         >
-          Let your agents spend in <span class="text-primary">control</span>
+          Let your agents <span
+            class="text-transparent [-webkit-text-stroke:2px_var(--foreground)]"
+            >spend</span
+          > in <span class="text-primary">control</span>
         </h2>
       </div>
 
@@ -214,7 +217,35 @@ const runs = [
           }
         </ul>
 
-        <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-4">
+          <p class="uppercase font-mono font-bold text-foreground/70 text-sm">
+            Works with agents
+          </p>
+
+          <div class="flex items-center gap-2">
+            <img
+              alt=""
+              src="/assets/claude.webp"
+              class="object-contain size-7 rounded-full"
+            /><img
+              alt=""
+              src="/assets/cursor.webp"
+              class="object-contain size-7 rounded-full -translate-x-1/2"
+            /><img
+              alt=""
+              src="/assets/codex.webp"
+              class="object-contain size-7 rounded-full -translate-x-full"
+            /><img
+              alt=""
+              src="/assets/grok.webp"
+              class="object-contain size-7 rounded-full translate-x-[-150%]"
+            />
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <p class="text-accent font-mono uppercase text-xs">Install</p>
+
           <div
             class="flex h-11 w-fit max-w-full items-center gap-3 border border-border bg-card/60 px-4 font-mono text-sm"
           >
@@ -232,28 +263,49 @@ const runs = [
               />
             </button>
           </div>
+        </div>
 
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
           <a
-            href={LINKS.docs}
+            href={LINKS.walletSetup}
             target="_blank"
             rel="noopener noreferrer"
-            class="group inline-flex w-fit items-center gap-2 font-mono text-sm font-medium uppercase tracking-wider text-primary transition-colors duration-150 ease-out hover:text-accent"
+            class="inline-flex h-11 w-fit items-center gap-2 bg-primary px-6 font-mono text-sm font-medium uppercase tracking-wider text-primary-foreground transition-colors duration-150 ease-out hover:bg-accent active:scale-[0.97]"
           >
-            Learn more
-            <span
-              aria-hidden="true"
-              class="transition-transform duration-150 ease-out group-hover:translate-x-0.5"
-            >
-              →
-            </span>
+            Get started
+          </a>
+          <a
+            href="#payments"
+            class="inline-flex h-11 w-fit items-center gap-2 px-3 font-mono text-sm font-medium uppercase tracking-wider text-primary transition-colors duration-150 ease-out hover:text-accent"
+          >
+            Explore
+            <span aria-hidden="true">↓</span>
           </a>
         </div>
+
+        <p
+          class="flex flex-col items-start gap-x-2.5 gap-y-1 md:inline-flex md:flex-row md:items-end"
+        >
+          <span class="text-sm text-foreground/40">
+            Built exclusively for autonomous agents on
+          </span>
+          <img
+            src="/sui_full_white.svg"
+            alt="Sui"
+            width="84"
+            height="32"
+            class="inline-flex h-5 w-auto opacity-50"
+          />
+        </p>
       </div>
     </div>
 
     <!-- Right: terminal demo -->
     <div data-reveal class="relative w-full md:max-w-xl md:justify-self-end">
-      <div data-terminal class="relative border border-border bg-card/90">
+      <div
+        data-terminal
+        class="relative border border-border bg-card/90 transition-all"
+      >
         <!-- Window chrome -->
         <div
           class="flex h-9 items-center gap-2 border-b border-border bg-secondary/60 px-4"
@@ -398,8 +450,8 @@ const runs = [
 
     /* Card border settles on the brand color once the paid run lands. */
     const setSuccessBorder = (on: boolean) => {
-      if (on) root.classList.replace("border-border", "border-green-500");
-      else root.classList.replace("border-green-500", "border-border");
+      if (on) root.classList.replace("border-border", "border-green-700");
+      else root.classList.replace("border-green-700", "border-border");
     };
 
     const blipErrorBorder = async () => {
@@ -442,7 +494,7 @@ const runs = [
             clearProps: "transform",
           },
         );
-        await sleep(95);
+        await sleep(45);
       }
     };
 
@@ -516,8 +568,8 @@ const runs = [
       await sleep(180);
       if (!live()) return;
       await printLines(paid, live);
-      if (!live()) return;
       setSuccessBorder(true);
+      if (!live()) return;
       replayButton.classList.replace("hidden", "inline-flex");
     };
 
