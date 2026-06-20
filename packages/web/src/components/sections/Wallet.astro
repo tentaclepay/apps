@@ -2,11 +2,15 @@
 import {
   Bot,
   Coins,
+  Copy,
+  CopyCheck,
   Fingerprint,
   Globe,
   RotateCcw,
   ShieldCheck,
 } from "@lucide/astro";
+
+import { LINKS } from "@/consts";
 
 const features = [
   {
@@ -30,6 +34,8 @@ const features = [
     body: "Pay in Sui — it settles on the destination chain. Built right in.",
   },
 ] as const;
+
+const installCmd = "curl -fsSL https://tentaclepay.com/install | bash";
 
 /* Terminal demo: bare curl hits the 402 paywall, tpay curl clears it.
    Markup carries the full transcripts so no-JS and reduced-motion visitors
@@ -208,12 +214,40 @@ const runs = [
           }
         </ul>
 
-        <span
-          class="inline-flex h-10 w-fit select-none items-center gap-2 border border-primary px-5 font-mono text-xs font-medium uppercase tracking-widest text-primary"
-        >
-          <span class="size-1 bg-primary"></span>
-          Coming soon
-        </span>
+        <div class="flex flex-col gap-4">
+          <div
+            class="flex h-11 w-fit max-w-full items-center gap-3 border border-border bg-card/60 px-4 font-mono text-sm"
+          >
+            <span class="select-none text-primary">$</span>
+            <code class="truncate text-foreground">{installCmd}</code>
+            <button
+              type="button"
+              data-copy={installCmd}
+              aria-label="Copy install command"
+              class="group ml-1 shrink-0 text-muted-foreground transition-colors hover:text-foreground active:scale-[0.97]"
+            >
+              <Copy class="size-3.5 group-data-[copied]:hidden" />
+              <CopyCheck
+                class="hidden size-3.5 text-primary group-data-[copied]:block"
+              />
+            </button>
+          </div>
+
+          <a
+            href={LINKS.docs}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group inline-flex w-fit items-center gap-2 font-mono text-sm font-medium uppercase tracking-wider text-primary transition-colors duration-150 ease-out hover:text-accent"
+          >
+            Learn more
+            <span
+              aria-hidden="true"
+              class="transition-transform duration-150 ease-out group-hover:translate-x-0.5"
+            >
+              →
+            </span>
+          </a>
+        </div>
       </div>
     </div>
 
@@ -362,6 +396,12 @@ const runs = [
       else root.classList.replace("border-destructive", "border-border");
     };
 
+    /* Card border settles on the brand color once the paid run lands. */
+    const setSuccessBorder = (on: boolean) => {
+      if (on) root.classList.replace("border-border", "border-green-500");
+      else root.classList.replace("border-green-500", "border-border");
+    };
+
     const blipErrorBorder = async () => {
       setErrorBorder(true);
       await sleep(120);
@@ -426,6 +466,7 @@ const runs = [
       gsap.set(approval, { opacity: 1 });
       approvalIcon.classList.remove("text-primary");
       setErrorBorder(false);
+      setSuccessBorder(false);
       replayButton.classList.replace("inline-flex", "hidden");
     };
 
@@ -476,6 +517,7 @@ const runs = [
       if (!live()) return;
       await printLines(paid, live);
       if (!live()) return;
+      setSuccessBorder(true);
       replayButton.classList.replace("hidden", "inline-flex");
     };
 
@@ -495,4 +537,28 @@ const runs = [
     );
     io.observe(root);
   }
+
+  /* Copy-to-clipboard for the install command. */
+  document
+    .querySelectorAll<HTMLButtonElement>("#wallet [data-copy]")
+    .forEach((button) => {
+      const defaultLabel = button.getAttribute("aria-label") ?? "Copy";
+      let resetTimer: ReturnType<typeof setTimeout> | undefined;
+      button.addEventListener("click", async () => {
+        const text = button.dataset.copy;
+        if (!text) return;
+        try {
+          await navigator.clipboard.writeText(text);
+          button.setAttribute("data-copied", "");
+          button.setAttribute("aria-label", "Copied");
+          clearTimeout(resetTimer);
+          resetTimer = setTimeout(() => {
+            button.removeAttribute("data-copied");
+            button.setAttribute("aria-label", defaultLabel);
+          }, 1000);
+        } catch {
+          /* clipboard unavailable — no-op */
+        }
+      });
+    });
 </script>
