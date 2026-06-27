@@ -34,7 +34,7 @@ export const FAQ = [
   },
   {
     q: "Are x402 payments on Sui gasless?",
-    a: "Yes. Sui makes stablecoin transfers gasless natively, but only above a $0.01 minimum. The Tentacle Pay facilitator sponsors gas for everything that rule leaves out — sub-cent stablecoin payments and any non-stablecoin coin — so no agent transaction ever fails on gas.",
+    a: "Yes. Sui covers gas for stablecoin transfers natively, and the Tentacle Pay facilitator sponsors gas for everything that leaves out, including sub-cent stablecoin payments and any non-stablecoin coin. The result is the same either way: the agent never pays gas, and no transaction fails on it.",
   },
   {
     q: "What are agentic payments?",
