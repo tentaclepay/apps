@@ -7,7 +7,7 @@ import { FAQ, LINKS } from "@/consts";
 <section
   id="faq"
   aria-labelledby="faq-heading"
-  class="relative w-full overflow-hidden py-28 md:py-24 min-h-screen"
+  class="relative w-full overflow-hidden min-h-screen"
 >
   <!-- Background: tentacles framing the centered FAQ -->
   <div
@@ -22,12 +22,12 @@ import { FAQ, LINKS } from "@/consts";
       height="989"
       loading="lazy"
       decoding="async"
-      class="h-auto w-1/2 object-contain opacity-80"
+      class="h-auto w-full md:w-8/10 object-contain opacity-80"
     />
     <!-- Darken the center so the centered FAQ stays readable; the tentacles
          keep glowing toward the edges. -->
     <div
-      class="absolute inset-0 bg-[radial-gradient(30%_45%_at_50%_50%,var(--background)_38%,transparent_100%)]"
+      class="absolute inset-0 bg-[radial-gradient(40%_60%_at_50%_50%,var(--background)_38%,transparent_100%)] md:bg-[radial-gradient(30%_45%_at_50%_50%,var(--background)_38%,transparent_100%)]"
     >
     </div>
   </div>
