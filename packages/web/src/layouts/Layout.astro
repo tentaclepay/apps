@@ -3,7 +3,7 @@ import "../styles/global.css";
 
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
-import { LINKS, SITE } from "@/consts";
+import { FAQ, LINKS, SITE } from "@/consts";
 
 interface Props {
   title?: string;
@@ -47,14 +47,44 @@ const schema = {
       publisher: { "@id": `${SITE.url}/#organization` },
     },
     {
+      "@type": "SoftwareApplication",
+      "@id": `${SITE.url}/#software`,
+      name: SITE.name,
+      url: SITE.url,
+      applicationCategory: "FinanceApplication",
+      operatingSystem: "Web, macOS, Linux, Windows",
+      description:
+        "x402 payment infrastructure for autonomous AI agents on Sui: a wallet agents control, an x402 facilitator for gasless stablecoin micropayments, and cross-chain settlement from a single Sui wallet.",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+        description:
+          "Free, open-source SDK and hosted x402 facilitator. Agents pay per-request stablecoin micropayments.",
+      },
+      publisher: { "@id": `${SITE.url}/#organization` },
+    },
+    {
       "@type": "WebPage",
       "@id": canonicalURL,
       url: canonicalURL,
       name: title,
       description,
       isPartOf: { "@id": `${SITE.url}/#website` },
+      about: { "@id": `${SITE.url}/#software` },
       primaryImageOfPage: ogImageURL,
       inLanguage: "en",
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${canonicalURL}#faq`,
+      isPartOf: { "@id": `${SITE.url}/#website` },
+      inLanguage: "en",
+      mainEntity: FAQ.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
     },
   ],
 };

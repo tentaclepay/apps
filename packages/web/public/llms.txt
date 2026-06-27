@@ -1,0 +1,58 @@
+# Tentacle Pay
+
+> x402 payment infrastructure for autonomous AI agents on Sui. A wallet agents
+> control, a hosted x402 facilitator for gasless stablecoin micropayments, and
+> cross-chain settlement from a single Sui wallet.
+
+Tentacle Pay gives AI agents the rails to transact on their own. An agent that
+hits a paid endpoint receives `HTTP 402 Payment Required`, signs a stablecoin
+payment, and the request clears with a `200 OK` — no accounts, API keys, or
+human in the loop. Payments settle on Sui, where stablecoins move gasless and
+in under a second, so agents only ever need a stablecoin balance.
+
+It is three pieces: the `tpay` wallet (a CLI + MCP server agents control, with
+spend rules they can't break), an [x402](https://x402.org) facilitator on Sui,
+and a cross-chain layer that lets a single Sui balance pay services on other
+chains.
+
+## What is x402 on Sui?
+
+x402 is an open payment standard built on the HTTP `402 Payment Required`
+status code: a server states its price, a client signs a payment, and a
+facilitator verifies and settles it onchain. Tentacle Pay runs a production
+x402 facilitator for Sui (`sui:mainnet` and `sui:testnet`), settling stablecoin
+micropayments gasless. USDC is the default token. Prices are set in USD (e.g.
+`"$0.001"`) and the SDK resolves the exact token amount.
+
+## Key facts
+
+- Networks: Sui Mainnet (`sui:mainnet`) and Sui Testnet (`sui:testnet`) for
+  native x402. Cross-chain settlement to EVM destinations is live on testnet.
+- Tokens: USDC by default; on mainnet the facilitator also sponsors gas for
+  USDSUI, sUSDe, USDY, FDUSD, AUSD, and USDB (all 6-decimal stablecoins).
+- Facilitator: hosted at `facilitator.tentaclepay.com`, free, never custodies
+  funds — settlement goes buyer → seller directly. Implements standard x402
+  `/verify`, `/settle`, and `/supported` endpoints.
+- SDK: `@tentaclepay/sui-x402` (client, server, facilitator roles), `exact`
+  scheme, x402 v2 compatible. Go, Java, and Python implementations on the way.
+- Cross-chain: powered by an Ika 2PC-MPC dWallet — one Sui wallet pays any chain.
+- Open source: wallet, SDK, facilitator, and Move smart contracts.
+
+## Docs
+
+- [Documentation](https://docs.tentaclepay.com): guides and API reference
+- [How it works](https://docs.tentaclepay.com/concepts): the protocol end to end
+- [x402 on Sui — overview](https://docs.tentaclepay.com/x402/overview): the payment rail in depth
+- [x402 quickstart for agents](https://docs.tentaclepay.com/x402/quickstart-for-agents): pay for x402 APIs from an agent
+- [x402 quickstart for sellers](https://docs.tentaclepay.com/x402/quickstart-for-sellers): put an x402 paywall on any endpoint
+- [Cross-chain overview](https://docs.tentaclepay.com/cross-chain/overview): pay other chains from a Sui wallet
+- [FAQ](https://docs.tentaclepay.com/faq): common questions about x402 on Sui
+
+## Code
+
+- [GitHub](https://github.com/tentaclepay): open-source monorepo
+- [npm: @tentaclepay/sui-x402](https://www.npmjs.com/package/@tentaclepay/sui-x402): x402 SDK for Sui
+
+## Social
+
+- [X / Twitter](https://x.com/tentaclepay)
