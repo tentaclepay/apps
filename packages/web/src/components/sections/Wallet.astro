@@ -1,41 +1,16 @@
 ---
 import {
-  Bot,
-  Coins,
   Copy,
   CopyCheck,
   Fingerprint,
-  Globe,
   RotateCcw,
-  ShieldCheck,
+  Sparkles,
 } from "@lucide/astro";
 
 import { LINKS } from "@/consts";
 
-const features = [
-  {
-    icon: Bot,
-    label: "Made for agents",
-    body: "Your agent holds it and pays on its own — no human in the loop.",
-  },
-  {
-    icon: ShieldCheck,
-    label: "Rules it can't break",
-    body: "Set the limits. The wallet enforces them on every spend.",
-  },
-  {
-    icon: Coins,
-    label: "Gasless on Sui",
-    body: "Pay in Sui stablecoins. Zero gas, every payment.",
-  },
-  {
-    icon: Globe,
-    label: "Pay across chains",
-    body: "Pay in Sui — it settles on the destination chain. Built right in.",
-  },
-] as const;
-
 const installCmd = "curl -fsSL https://tentaclepay.com/install | bash";
+const agentPrompt = `Install Tentacle Pay by running \`${installCmd}\`, add its agent skills from tentaclepay/skills, and set up a wallet for me.`;
 
 /* Terminal demo: bare curl hits the 402 paywall, tpay curl clears it.
    Markup carries the full transcripts so no-JS and reduced-motion visitors
@@ -189,8 +164,9 @@ const runs = [
       </div>
 
       <div data-reveal-group class="flex flex-col gap-6">
-        <p class="max-w-md text-sm text-foreground/60">
-          Built for autonomous agents on Sui. Inspired by <a
+        <p class="max-w-md text-sm leading-relaxed text-foreground/60">
+          A wallet your agent holds and spends on its own — gasless, with limits
+          it can't break. Built for autonomous agents on Sui, inspired by <a
             href="https://pay.sh"
             target="_blank"
             rel="noopener noreferrer"
@@ -198,50 +174,6 @@ const runs = [
             >pay.sh</a
           >.
         </p>
-
-        <ul class="grid max-w-xl grid-cols-1 gap-x-10 gap-y-6 sm:grid-cols-2">
-          {
-            features.map(({ icon: Icon, label, body }) => (
-              <li class="flex flex-col gap-2">
-                <span class="flex items-center gap-2.5">
-                  <Icon class="size-4 shrink-0 text-primary" />
-                  <span class="font-mono text-xs font-medium uppercase tracking-widest text-foreground">
-                    {label}
-                  </span>
-                </span>
-                <span class="text-sm leading-relaxed text-foreground/60">
-                  {body}
-                </span>
-              </li>
-            ))
-          }
-        </ul>
-
-        <div class="flex items-center gap-4">
-          <p class="uppercase font-mono font-bold text-foreground/70 text-sm">
-            Works with agents
-          </p>
-
-          <div class="flex items-center gap-2">
-            <img
-              alt=""
-              src="/assets/claude.webp"
-              class="object-contain size-7 rounded-full"
-            /><img
-              alt=""
-              src="/assets/cursor.webp"
-              class="object-contain size-7 rounded-full -translate-x-1/2"
-            /><img
-              alt=""
-              src="/assets/codex.webp"
-              class="object-contain size-7 rounded-full -translate-x-full"
-            /><img
-              alt=""
-              src="/assets/grok.webp"
-              class="object-contain size-7 rounded-full translate-x-[-150%]"
-            />
-          </div>
-        </div>
 
         <div class="flex flex-col gap-3">
           <p class="text-accent font-mono uppercase text-xs">Install</p>
@@ -265,6 +197,31 @@ const runs = [
           </div>
         </div>
 
+        <!-- Or hand the prompt to your agent -->
+        <div class="flex flex-col gap-3">
+          <p class="text-accent font-mono uppercase text-xs">
+            Or ask your agent
+          </p>
+
+          <div
+            class="flex w-full max-w-lg items-start gap-3 border border-border bg-card/60 px-4 py-3 text-sm"
+          >
+            <Sparkles class="size-4 shrink-0 translate-y-0.5 text-primary" />
+            <p class="text-foreground/80">{agentPrompt}</p>
+            <button
+              type="button"
+              data-copy={agentPrompt}
+              aria-label="Copy agent prompt"
+              class="group ml-auto shrink-0 translate-y-0.5 text-muted-foreground transition-colors hover:text-foreground active:scale-[0.97]"
+            >
+              <Copy class="size-3.5 group-data-[copied]:hidden" />
+              <CopyCheck
+                class="hidden size-3.5 text-primary group-data-[copied]:block"
+              />
+            </button>
+          </div>
+        </div>
+
         <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
           <a
             href={LINKS.walletSetup}
@@ -274,13 +231,32 @@ const runs = [
           >
             Get started
           </a>
-          <a
-            href="#payments"
-            class="inline-flex h-11 w-fit items-center gap-2 px-3 font-mono text-sm font-medium uppercase tracking-wider text-primary transition-colors duration-150 ease-out hover:text-accent"
-          >
-            Explore
-            <span aria-hidden="true">↓</span>
-          </a>
+
+          <div class="flex items-center gap-4">
+            <p class="uppercase font-mono text-foreground/70 text-xs">
+              Works with
+            </p>
+
+            <div class="flex items-center gap-2">
+              <img
+                alt=""
+                src="/assets/claude.webp"
+                class="object-contain size-7 rounded-full"
+              /><img
+                alt=""
+                src="/assets/cursor.webp"
+                class="object-contain size-7 rounded-full -translate-x-1/2"
+              /><img
+                alt=""
+                src="/assets/codex.webp"
+                class="object-contain size-7 rounded-full -translate-x-full"
+              /><img
+                alt=""
+                src="/assets/grok.webp"
+                class="object-contain size-7 rounded-full translate-x-[-150%]"
+              />
+            </div>
+          </div>
         </div>
 
         <p
