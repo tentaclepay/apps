@@ -1,0 +1,144 @@
+---
+import { Copy, CopyCheck, Sparkles } from "@lucide/astro";
+
+/* Two ways to install: run the command, or hand the prompt to your agent. */
+const installCmd = "npx skills add tentaclepay/skills";
+const agentPrompt =
+  "Install Tentacle Pay's agent skills from tentaclepay/skills.";
+---
+
+<section
+  id="skills"
+  aria-labelledby="skills-heading"
+  class="relative flex min-h-screen w-full items-center overflow-hidden py-28 md:py-24"
+>
+  <!-- Background: tentacles (right-aligned on desktop, full-bleed dimmed on mobile) -->
+  <div
+    class="absolute inset-0 z-0 select-none pointer-events-none"
+    aria-hidden="true"
+  >
+    <img
+      data-img-reveal
+      src="/images/skills.webp"
+      alt=""
+      width="5248"
+      height="3264"
+      loading="lazy"
+      decoding="async"
+      class="absolute inset-0 h-full w-full object-cover object-center brightness-40 mask-[radial-gradient(closest-side,black_70%,transparent)] md:inset-y-0 md:left-auto md:right-48 md:h-[90%] md:w-auto md:max-w-[60%] md:object-contain md:object-right md:brightness-75"
+    />
+  </div>
+
+  <div
+    class="relative z-10 container mx-auto grid items-center gap-12 px-6 md:grid-cols-2 md:gap-16"
+  >
+    <!-- Left: content -->
+    <div class="flex flex-col gap-7">
+      <div class="flex flex-col gap-4">
+        <p
+          data-reveal
+          class="font-mono text-xs font-medium uppercase tracking-widest text-muted-foreground"
+        >
+          // Skills
+        </p>
+        <h2
+          id="skills-heading"
+          data-split
+          class="font-heading text-[clamp(3.75rem,8.5vw,7.5rem)] uppercase leading-[0.85] tracking-wide"
+        >
+          <span
+            class="text-transparent [-webkit-text-stroke:2px_var(--foreground)]"
+            >Plug</span
+          >
+          it <span class="text-primary">in</span>
+        </h2>
+      </div>
+
+      <div data-reveal-group class="flex flex-col gap-6">
+        <p class="max-w-xl text-base leading-relaxed text-foreground/70">
+          Drop-in skills to
+          <span class="font-medium text-foreground"
+            >manage a Tentacle Pay wallet</span
+          >
+          or <span class="font-medium text-primary">integrate x402 on Sui</span
+          >. Add them to Claude Code, Codex, Cursor or any agent that loads the
+          skill — run the command yourself, or just ask your agent.
+        </p>
+
+        <!-- Install: run the command -->
+        <div class="flex flex-col gap-3">
+          <p class="text-accent font-mono uppercase text-xs">Install</p>
+
+          <div
+            class="flex h-11 w-fit max-w-full items-center gap-3 border border-border bg-card/60 px-4 font-mono text-sm"
+          >
+            <span class="select-none text-primary">$</span>
+            <code class="truncate text-foreground">{installCmd}</code>
+            <button
+              type="button"
+              data-copy={installCmd}
+              aria-label="Copy install command"
+              class="group ml-1 shrink-0 text-muted-foreground transition-colors hover:text-foreground active:scale-[0.97]"
+            >
+              <Copy class="size-3.5 group-data-[copied]:hidden" />
+              <CopyCheck
+                class="hidden size-3.5 text-primary group-data-[copied]:block"
+              />
+            </button>
+          </div>
+        </div>
+
+        <!-- Install: or hand the prompt to your agent -->
+        <div class="flex flex-col gap-3">
+          <p class="text-accent font-mono uppercase text-xs">
+            Or ask your agent
+          </p>
+
+          <div
+            class="flex w-full max-w-md items-start gap-3 border border-border bg-card/60 px-4 py-3 text-sm"
+          >
+            <Sparkles class="size-4 shrink-0 translate-y-0.5 text-primary" />
+            <p class="text-foreground/80">{agentPrompt}</p>
+            <button
+              type="button"
+              data-copy={agentPrompt}
+              aria-label="Copy agent prompt"
+              class="group ml-auto shrink-0 translate-y-0.5 text-muted-foreground transition-colors hover:text-foreground active:scale-[0.97]"
+            >
+              <Copy class="size-3.5 group-data-[copied]:hidden" />
+              <CopyCheck
+                class="hidden size-3.5 text-primary group-data-[copied]:block"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  /* Copy-to-clipboard for the install command and the agent prompt. */
+  document
+    .querySelectorAll<HTMLButtonElement>("#skills [data-copy]")
+    .forEach((button) => {
+      const defaultLabel = button.getAttribute("aria-label") ?? "Copy";
+      let resetTimer: ReturnType<typeof setTimeout> | undefined;
+      button.addEventListener("click", async () => {
+        const text = button.dataset.copy;
+        if (!text) return;
+        try {
+          await navigator.clipboard.writeText(text);
+          button.setAttribute("data-copied", "");
+          button.setAttribute("aria-label", "Copied");
+          clearTimeout(resetTimer);
+          resetTimer = setTimeout(() => {
+            button.removeAttribute("data-copied");
+            button.setAttribute("aria-label", defaultLabel);
+          }, 1000);
+        } catch {
+          /* clipboard unavailable — no-op */
+        }
+      });
+    });
+</script>
